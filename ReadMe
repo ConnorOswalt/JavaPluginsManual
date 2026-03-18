@@ -1,0 +1,26 @@
+If using WSL, or similar virtual envuiroiment in VSCode use this batch file to compile and run the program instead of using the terminal commands.
+
+
+@echo off
+echo Cleaning...
+rmdir /s /q bin 2>nul
+mkdir bin
+
+echo Finding sources...
+dir /s /b src\*.java > sources.txt
+
+echo Compiling...
+javac -d bin -sourcepath src @sources.txt
+
+if %ERRORLEVEL% NEQ 0 (
+    echo Compilation FAILED!
+    pause
+    exit /b
+)
+
+del sources.txt
+
+echo Running...
+java -cp bin buttonstuff.app.URLButtonDemo
+
+pause
